@@ -26,18 +26,14 @@ router.post('/api/notes', async (req, res) => {
 
     const { title, text } = req.body;
 
-    // If all the required properties are present
     if (title && text) {
-        // Variable for the object we will save
         const newNote = {
             title, 
             text, 
             id: uuid()};
         
-
         const savedNotes = await readFile();
         savedNotes.push(newNote);
-
         await writeFile(savedNotes);
         res.json('New note saved!')
     } else {
@@ -45,7 +41,15 @@ router.post('/api/notes', async (req, res) => {
     }
 });
 
-router.delete('/api/notes', async (req, res) => {
+router.delete('/api/notes/:id', async (req, res) => {
+    // read file, get note id - use for loop
+    const { id } = req.body;
+    const savedNotes = await readFile();
+    for (let i = 0; i < savedNotes.length; i++) {
+        if (`:id` === id) {
+            
+        }
+    };
     // read file, remove data from array, then write file with new array
 });
 
