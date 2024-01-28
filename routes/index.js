@@ -44,12 +44,17 @@ router.post('/api/notes', async (req, res) => {
 router.delete('/api/notes/:id', async (req, res) => {
     // read file, get note id - use for loop
     const { id } = req.body;
+    if (id) {
+        console.log();
+    }
     const savedNotes = await readFile();
-    for (let i = 0; i < savedNotes.length; i++) {
-        if (`:id` === id) {
-            
-        }
-    };
+    // const newNotes = savedNotes.filter(() =>   !== id );
+    
+    // for (let i = 0; i < savedNotes.length; i++) {
+    //     if (`:id` === id) {
+
+    //     }
+    // };
     // read file, remove data from array, then write file with new array
 });
 
