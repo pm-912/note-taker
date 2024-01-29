@@ -16,46 +16,48 @@ const writeFile = async function (data) {
     }
 };
 
-
 router.get('/api/notes', async (req, res) => {
     res.json(await readFile());
 });
 
 router.post('/api/notes', async (req, res) => {
     console.info(`${req.method} request received to add a new review`);
-
-    const { title, text } = req.body;
-
-    if (title && text) {
-        const newNote = {
-            title, 
-            text, 
-            id: uuid()};
-        
-        const savedNotes = await readFile();
-        savedNotes.push(newNote);
-        await writeFile(savedNotes);
-        res.json('New note saved!')
-    } else {
-        res.status(500).json('Error in posting review');
+    try {
+        const { title, text } = req.body;
+        if (title && text) {
+            const newNote = {
+                title,
+                text,
+                id: uuid()
+            };
+            const savedNotes = await readFile();
+            savedNotes.push(newNote);
+            await writeFile(savedNotes);
+            res.json('New note saved!');
+        } else {
+            res.status(500).json('Error in posting review');
+        }
+    } catch (err) {
+        console.err(err)
     }
 });
 
 router.delete('/api/notes/:id', async (req, res) => {
-    // read file, get note id - use for loop
-    const { id } = req.params;
-    if (id) {
-        console.log(id); // this logs the id of the clicked note
-    }
-    const savedNotes = await readFile();
-    // const newNotes = savedNotes.filter(() =>   !== id );
-    
-    // for (let i = 0; i < savedNotes.length; i++) {
-    //     if (`:id` === id) {
-
-    //     }
-    // };
     // read file, remove data from array, then write file with new array
+    try { 
+        const { id } = req.params;
+        if (id) {
+            const savedNotes = await readFile();
+            const newNotes = savedNotes.filter((data) => data.id !== id);
+            console.log(newNotes);
+            await writeFile(newNotes);
+            res.json('Note deleted');
+        } else {
+            res.status(500).json('Error in deleting review');
+        }
+    } catch (err) {
+        console.err(err)
+    }
 });
 
 module.exports = router;
