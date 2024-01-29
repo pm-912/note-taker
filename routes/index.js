@@ -43,9 +43,9 @@ router.post('/api/notes', async (req, res) => {
 
 router.delete('/api/notes/:id', async (req, res) => {
     // read file, get note id - use for loop
-    const { id } = req.body;
+    const { id } = req.params;
     if (id) {
-        console.log();
+        console.log(id); // this logs the id of the clicked note
     }
     const savedNotes = await readFile();
     // const newNotes = savedNotes.filter(() =>   !== id );
