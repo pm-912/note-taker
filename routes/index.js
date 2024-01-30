@@ -21,7 +21,7 @@ router.get('/api/notes', async (req, res) => {
 });
 
 router.post('/api/notes', async (req, res) => {
-    console.info(`${req.method} request received to add a new review`);
+    console.info(`${req.method} request received to add a new note`);
     try {
         const { title, text } = req.body;
         if (title && text) {
@@ -35,7 +35,7 @@ router.post('/api/notes', async (req, res) => {
             await writeFile(savedNotes);
             res.json('New note saved!');
         } else {
-            res.status(500).json('Error in posting review');
+            res.status(500).json('Error in posting note');
         }
     } catch (err) {
         console.err(err)
@@ -53,7 +53,7 @@ router.delete('/api/notes/:id', async (req, res) => {
             await writeFile(newNotes);
             res.json('Note deleted');
         } else {
-            res.status(500).json('Error in deleting review');
+            res.status(500).json('Error in deleting note');
         }
     } catch (err) {
         console.err(err)
